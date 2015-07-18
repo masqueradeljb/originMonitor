@@ -13,7 +13,12 @@ chrome.webRequest.onBeforeRequest.addListener(
 	,{urls: ["http://*/*", "https://*/*"]},
 	 ["requestBody"]
 	);
-
+chrome.runtime.onMessage.addListener(
+	function(request,sender,sendResponse){
+		var tabid=request.tabid;
+		var data=JSON.stringify(urls[tabid]);
+		sendResponse(data);
+	});
 
 
 // document.addEventListener('DOMContentLoaded',function(){
