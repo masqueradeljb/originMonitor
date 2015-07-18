@@ -1,11 +1,10 @@
 chrome.webRequest.onBeforeRequest.addListener(
 	function(details){
-		chrome.tabs.get(details.tabId,function (tab){
-		console.log("tab id:"+tab.id+" url:"+details.url);
-
-		})
-	},{urls: ["http://*/*", "https://*/*"]},
-		        ["requestBody"]);
+		console.log("tab id:"+details.tabId+" url:"+details.url);
+	}
+	,{urls: ["http://*/*", "https://*/*"]},
+	 ["requestBody"]
+	);
 
 
 
