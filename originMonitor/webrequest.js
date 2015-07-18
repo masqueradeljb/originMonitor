@@ -1,5 +1,13 @@
+
+var urls={};
 chrome.webRequest.onBeforeRequest.addListener(
 	function(details){
+		if(details.tabId in urls){
+			urls[details.tabId].push(details.url);
+		}else{
+			urls[details.tabId]=[];
+			urls[details.tabId].push(details.url);
+		}
 		console.log("tab id:"+details.tabId+" url:"+details.url);
 	}
 	,{urls: ["http://*/*", "https://*/*"]},
