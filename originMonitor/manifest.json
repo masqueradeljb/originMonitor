@@ -11,7 +11,7 @@
   },
 
   "background": {
-    "page": "background.html"
+     "scripts": ["webrequest.js"]
   },
 
   "content_scripts": [
