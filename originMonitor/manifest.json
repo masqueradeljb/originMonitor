@@ -9,29 +9,24 @@
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
-<<<<<<< HEAD
+
   "background": {
     "page": "background.html"
   },
-=======
+
   "content_scripts": [
     {
       "matches": ["*://*/*"],
       "js": ["page.js"]
     }
   ],
->>>>>>> d566854916f0144070f5bdf77f6a6a5180c68162
+
   "permissions": [
     "activeTab",
     "webRequest",
     "webRequestBlocking",
     "tabs",
-<<<<<<< HEAD
-    "storage"
-=======
-    "background",
     "storage",
     "*://*/*"
->>>>>>> d566854916f0144070f5bdf77f6a6a5180c68162
   ]
 }
