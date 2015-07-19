@@ -9,7 +9,7 @@
 			     		var obj=JSON.parse(response);
 			     		var request=document.getElementById("request");
 			     		var domain=document.getElementById("domain");
-			     		domain.innerHTML="Domain: "+obj.dom;
+			     		domain.innerHTML="Website: "+obj.dom;
 			     		request.innerHTML="Origins:"
 			     		for(var j=0;j<obj.origin.length;++j){
 			     			var node= document.createElement("p");
