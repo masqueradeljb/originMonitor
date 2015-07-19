@@ -22,15 +22,15 @@
 			     			//if (type.innerHTML.match(/.*(png|img|gif|jpeg|jpg).*/)) 
 			     			
 			     			if (origin in originset) {
-			     				if (type.match(/.*(png|img|gif|jpeg|jpg).*/)) 
+			     				if (type.toLowerCase().match(/.*(png|img|gif|jpeg|jpg).*/)) 
 			     					originset[origin].image = true;
-			     				else if (type.match(/.*(html|htm|txt|doc|xls|docx|xlsx).*/))
+			     				else if (type.toLowerCase().match(/.*(html|htm|txt|doc|xls|docx|xlsx|pdf).*/))
 			     					originset[origin].doc = true;
-			     				else if (type.match(/.*(ttf|otf|woff|eot).*/))
+			     				else if (type.toLowerCase().match(/.*(ttf|otf|woff|eot).*/))
 			     					originset[origin].fonts = true;
-			     				else if (type.match(/.*(js|php|asp|jsp).*/))
+			     				else if (type.toLowerCase().match(/.*(js|php|asp|jsp).*/))
 			     					originset[origin].script = true;
-			     				else if (type.match(/.*(css).*/))
+			     				else if (type.toLowerCase().match(/.*(css).*/))
 			     					originset[origin].css = true;
 			     				else
 			     					originset[origin].others = true;
@@ -46,13 +46,13 @@
 
 			     				if (type.match(/.*(png|img|gif|jpeg|jpg).*/)) 
 			     					originset[origin].image = true;
-			     				else if (type.match(/.*(html|htm|txt|doc|xls|docx|xlsx).*/))
+			     				else if (type.toLowerCase().match(/.*(html|htm|txt|doc|xls|docx|xlsx).*/))
 			     					originset[origin].doc = true;
-			     				else if (type.match(/.*(ttf|otf|woff|eot).*/))
+			     				else if (type.toLowerCase().match(/.*(ttf|otf|woff|eot).*/))
 			     					originset[origin].fonts = true;
-			     				else if (type.match(/.*(js|php|asp|jsp).*/))
+			     				else if (type.toLowerCase().match(/.*(js|php|asp|jsp).*/))
 			     					originset[origin].script = true;
-			     				else if (type.match(/.*(css).*/))
+			     				else if (type.toLowerCase().match(/.*(css).*/))
 			     					originset[origin].css = true;
 			     				else
 			     					originset[origin].others = true;
