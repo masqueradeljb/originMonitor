@@ -15,9 +15,13 @@ chrome.webRequest.onBeforeRequest.addListener(
 	);
 chrome.runtime.onMessage.addListener(
 	function(request,sender,sendResponse){
-		var tabid=request.tabid;
-		var data=JSON.stringify(urls[tabid]);
-		sendResponse(data);
+		var tabid = request.tabid;
+
+		var origin = JSON.stringify(urls[tabid]);
+	
+
+		sendResponse(origin);
+		//sendResponse(type);
 	});
 
 
