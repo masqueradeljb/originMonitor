@@ -8,9 +8,12 @@
 			     	function(response){
 			     		var obj=JSON.parse(response);
 			     		var request=document.getElementById("request");
-			     		for(var j=0;j<obj.length;++j){
+			     		var domain=document.getElementById("domain");
+			     		domain.innerHTML="Domain: "+obj.dom;
+			     		request.innerHTML="Origins:"
+			     		for(var j=0;j<obj.origin.length;++j){
 			     			var node= document.createElement("p");
-			     			node.innerHTML=obj[j];
+			     			node.innerHTML=obj.origin[j];
 			     			request.appendChild(node);
 			     		}
 			     	}

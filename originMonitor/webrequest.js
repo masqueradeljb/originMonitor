@@ -1,14 +1,26 @@
 
-var urls={};
+var urls=new Object();
 chrome.webRequest.onBeforeRequest.addListener(
 	function(details){
-		if(details.tabId in urls){
-			urls[details.tabId].push(details.url);
-		}else{
-			urls[details.tabId]=[];
-			urls[details.tabId].push(details.url);
-		}
-		console.log("tab id:"+details.tabId+" url:"+details.url);
+		if(details.tabId!=-1){
+			chrome.tabs.get(details.tabId, function(tab){
+				console.log("tab id:"+details.tabId+"tab url:"+tab.url+" url:"+details.url);
+				if(details.tabId in urls){
+					if(urls[details.tabId].dom!=tab.url){
+						urls[details.tabId].dom=tab.url;
+						urls[details.tabId].origin=[];
+					}
+					urls[details.tabId].origin.push(details.url);
+				}else{
+					urls[details.tabId]=new Object();
+					urls[details.tabId].dom=tab.url;
+					urls[details.tabId].origin=[];
+					urls[details.tabId].origin.push(details.url);
+				}
+
+				});
+		}else
+			console.log("tab id:"+details.tabId+" url:"+details.url);
 	}
 	,{urls: ["http://*/*", "https://*/*"]},
 	 ["requestBody"]
