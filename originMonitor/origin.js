@@ -8,17 +8,15 @@
 			     	function(response){
 
 			     		var obj = JSON.parse(response);
-			     		var request = document.getElementById("request");
+
 			     		var domain=document.getElementById("domain");
 			     		domain.innerHTML="Website: "+obj.dom;
-			     		request.innerHTML="Origins:"
+
 			     		var originset = {};
+
 			     		for(var j = 0;j < obj.origin.length;++j){
 			     			//var origin = document.createElement("p");
-			     			
-
 			     			var origin = obj.origin[j].split('\/')[0] + "//" + obj.origin[j].split('\/')[2];
-
 			     			var type = obj.origin[j].split('\/').pop().split('.').pop();
 
 			     			//if (type.innerHTML.match(/.*(png|img|gif|jpeg|jpg).*/)) 
@@ -36,9 +34,6 @@
 			     					originset[origin].css = true;
 			     				else
 			     					originset[origin].others = true;
-
-
-			
 			     			}
 			     			else {
 			     				originset[origin] = new Object ();
@@ -108,6 +103,111 @@
 			     			row.appendChild(column2);
 
 			     			image.appendChild(row);
+
+			     		}
+
+			     		var doc = document.getElementById('doc');
+
+			     		for (var i in docarr) {
+			     			var row = document.createElement("tr");
+
+			     			var column1 = document.createElement("td");
+			     			var column2 = document.createElement("td");
+
+			     			var button = document.createElement("button");
+
+			     			column2.appendChild(button);
+
+			     			column1.innerHTML = docarr[i];
+
+			     			row.appendChild(column1);
+			     			row.appendChild(column2);
+
+			     			doc.appendChild(row);
+
+			     		}
+
+			     		var fonts = document.getElementById('fonts');
+
+			     		for (var i in fontsarr) {
+			     			var row = document.createElement("tr");
+
+			     			var column1 = document.createElement("td");
+			     			var column2 = document.createElement("td");
+
+			     			var button = document.createElement("button");
+
+			     			column2.appendChild(button);
+
+			     			column1.innerHTML = fontsarr[i];
+
+			     			row.appendChild(column1);
+			     			row.appendChild(column2);
+
+			     			fonts.appendChild(row);
+
+			     		}
+
+			     		var script = document.getElementById('script');
+
+			     		for (var i in scriptarr) {
+			     			var row = document.createElement("tr");
+
+			     			var column1 = document.createElement("td");
+			     			var column2 = document.createElement("td");
+
+			     			var button = document.createElement("button");
+
+			     			column2.appendChild(button);
+
+			     			column1.innerHTML = scriptarr[i];
+
+			     			row.appendChild(column1);
+			     			row.appendChild(column2);
+
+			     			script.appendChild(row);
+
+			     		}
+
+			     		var css = document.getElementById('css');
+
+			     		for (var i in cssarr) {
+			     			var row = document.createElement("tr");
+
+			     			var column1 = document.createElement("td");
+			     			var column2 = document.createElement("td");
+
+			     			var button = document.createElement("button");
+
+			     			column2.appendChild(button);
+
+			     			column1.innerHTML = cssarr[i];
+
+			     			row.appendChild(column1);
+			     			row.appendChild(column2);
+
+			     			css.appendChild(row);
+
+			     		}
+
+			     		var others = document.getElementById('others');
+
+			     		for (var i in othersarr) {
+			     			var row = document.createElement("tr");
+
+			     			var column1 = document.createElement("td");
+			     			var column2 = document.createElement("td");
+
+			     			var button = document.createElement("button");
+
+			     			column2.appendChild(button);
+
+			     			column1.innerHTML = othersarr[i];
+
+			     			row.appendChild(column1);
+			     			row.appendChild(column2);
+
+			     			others.appendChild(row);
 
 			     		}
 			     	}
