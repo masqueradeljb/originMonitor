@@ -13,7 +13,7 @@
 			     		domain.innerHTML="Website: "+obj.dom;
 			     		request.innerHTML="Origins:"
 
-			     		for(var j = 0;j < obj.length;++j){
+			     		for(var j = 0;j < obj.origin.length;++j){
 			     			var origin = document.createElement("p");
 			     			
 			     			origin.innerHTML = obj.origin[j].split('\/')[0] + "//" + obj.origin[j].split('\/')[2];
