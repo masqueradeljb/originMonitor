@@ -12,10 +12,10 @@
 			     		var domain=document.getElementById("domain");
 			     		domain.innerHTML="Website: "+obj.dom;
 			     		request.innerHTML="Origins:"
-
+			     		var originset = {};
 			     		for(var j = 0;j < obj.origin.length;++j){
 			     			//var origin = document.createElement("p");
-			     			var originset = {};
+			     			
 
 			     			var origin = obj.origin[j].split('\/')[0] + "//" + obj.origin[j].split('\/')[2];
 
@@ -27,7 +27,7 @@
 			     				if (type.match(/.*(png|img|gif|jpeg|jpg).*/)) 
 			     					originset[origin].image = true;
 			     				else if (type.match(/.*(html|htm|txt|doc|xls|docx|xlsx).*/))
-			     					origniset[origin].doc = true;
+			     					originset[origin].doc = true;
 			     				else if (type.match(/.*(ttf|otf|woff|eot).*/))
 			     					originset[origin].fonts = true;
 			     				else if (type.match(/.*(js|php|asp|jsp).*/))
@@ -102,7 +102,7 @@
 
 			     			column2.appendChild(button);
 
-			     			column1.innerHTML = i;
+			     			column1.innerHTML = imagearr[i];
 
 			     			row.appendChild(column1);
 			     			row.appendChild(column2);
