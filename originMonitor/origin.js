@@ -3,17 +3,19 @@
 				var currentTabID=tabs[0].id;
 				console.log("popup:"+currentTabID);
 			     chrome.runtime.sendMessage({
-			     	tabid:currentTabID
+			     	tabid:currentTabID,
+			     	flag:1
 			     },
 			     	function(response){
 
 			     		var obj = JSON.parse(response);
 
 			     		var domain=document.getElementById("domain");
-			     		domain.innerHTML="Website: "+obj.dom;
+			     		var domOrigin=obj.dom.split('\/')[0] + "//" + obj.dom.split('\/')[2];
+			     		domain.innerHTML="Website: "+domOrigin;
 
 			     		var originset = {};
-
+			     		var blockset=obj.block;
 			     		for(var j = 0;j < obj.origin.length;++j){
 			     			//var origin = document.createElement("p");
 			     			var origin = obj.origin[j].split('\/')[0] + "//" + obj.origin[j].split('\/')[2];
@@ -86,135 +88,59 @@
 			     		}
 
 			     		var image = document.getElementById('image');
-
-			     		for (var i in imagearr) {
-			     			var row = document.createElement("tr");
-
-			     			var column1 = document.createElement("td");
-			     			var column2 = document.createElement("td");
-
-			     			var button = document.createElement("button");
-
-			     			column2.appendChild(button);
-
-			     			column1.innerHTML = imagearr[i];
-
-			     			row.appendChild(column1);
-			     			row.appendChild(column2);
-
-			     			image.appendChild(row);
-
-			     		}
-
+			     		appendUrl(image,imagearr,blockset,currentTabID);
 			     		var doc = document.getElementById('doc');
-
-			     		for (var i in docarr) {
-			     			var row = document.createElement("tr");
-
-			     			var column1 = document.createElement("td");
-			     			var column2 = document.createElement("td");
-
-			     			var button = document.createElement("button");
-
-			     			column2.appendChild(button);
-
-			     			column1.innerHTML = docarr[i];
-
-			     			row.appendChild(column1);
-			     			row.appendChild(column2);
-
-			     			doc.appendChild(row);
-
-			     		}
-
+			     		appendUrl(doc,docarr,blockset,currentTabID);
 			     		var fonts = document.getElementById('fonts');
-
-			     		for (var i in fontsarr) {
-			     			var row = document.createElement("tr");
-
-			     			var column1 = document.createElement("td");
-			     			var column2 = document.createElement("td");
-
-			     			var button = document.createElement("button");
-
-			     			column2.appendChild(button);
-
-			     			column1.innerHTML = fontsarr[i];
-
-			     			row.appendChild(column1);
-			     			row.appendChild(column2);
-
-			     			fonts.appendChild(row);
-
-			     		}
-
+			     		appendUrl(fonts,fontsarr,blockset,currentTabID);
 			     		var script = document.getElementById('script');
-
-			     		for (var i in scriptarr) {
-			     			var row = document.createElement("tr");
-
-			     			var column1 = document.createElement("td");
-			     			var column2 = document.createElement("td");
-
-			     			var button = document.createElement("button");
-
-			     			column2.appendChild(button);
-
-			     			column1.innerHTML = scriptarr[i];
-
-			     			row.appendChild(column1);
-			     			row.appendChild(column2);
-
-			     			script.appendChild(row);
-
-			     		}
-
+			     		appendUrl(script,scriptarr,blockset,currentTabID);
 			     		var css = document.getElementById('css');
-
-			     		for (var i in cssarr) {
-			     			var row = document.createElement("tr");
-
-			     			var column1 = document.createElement("td");
-			     			var column2 = document.createElement("td");
-
-			     			var button = document.createElement("button");
-
-			     			column2.appendChild(button);
-
-			     			column1.innerHTML = cssarr[i];
-
-			     			row.appendChild(column1);
-			     			row.appendChild(column2);
-
-			     			css.appendChild(row);
-
-			     		}
-
+			     		appendUrl(css,cssarr,blockset,currentTabID);
 			     		var others = document.getElementById('others');
-
-			     		for (var i in othersarr) {
-			     			var row = document.createElement("tr");
-
-			     			var column1 = document.createElement("td");
-			     			var column2 = document.createElement("td");
-
-			     			var button = document.createElement("button");
-
-			     			column2.appendChild(button);
-
-			     			column1.innerHTML = othersarr[i];
-
-			     			row.appendChild(column1);
-			     			row.appendChild(column2);
-
-			     			others.appendChild(row);
-
-			     		}
+			     		appendUrl(others,othersarr,blockset,currentTabID);
 			     	}
 			     );
 		});
    
  });
+
+ function appendUrl(table,array,blockset,currentTabID){
+
+	for (var i in array) {
+			var row = document.createElement("tr");
+			var column1 = document.createElement("td");
+			if(array[i] in blockset)
+				column1.style.color="red";
+			column1.className=array[i];
+			var column2 = document.createElement("td");
+			var button = document.createElement("button");
+			button.innerHTML="block!";
+			button.name=array[i];
+			button.addEventListener("click",function(e){
+				var block_url=e.target.name;
+				var ele=document.getElementsByClassName(e.target.name);
+				for(var k=0;k<ele.length;k++)
+					ele[k].style.color="blue";
+				//send message to background
+				chrome.runtime.sendMessage({
+			     	blockurl:block_url,
+			     	flag:0,
+			     	tabid:currentTabID
+			     },
+			     function(response){
+			     	console.log(response.success);
+			     }
+			     );
+			});
+			if( !(array[i] in blockset))
+				column2.appendChild(button);
+			column1.innerHTML = array[i];
+			row.appendChild(column1);
+			row.appendChild(column2);
+			table.appendChild(row);
+	}
+ }
 
 
  
