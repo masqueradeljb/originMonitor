@@ -20,7 +20,9 @@ function clickHandler3(e) {
 
 function wlAdd() {
 
-	var row = document.createElement("tr");
+	var table = document.getElementById("list");
+
+	var row1 = document.createElement("tr");
 
 	var col1 = document.createElement("td");
 	var col2 = document.createElement("td");
@@ -28,18 +30,40 @@ function wlAdd() {
 	col1.innerHTML = document.getElementById("nameInput").value;
 	col2.innerHTML = document.getElementById("urlInput").value;
 
-	row.appendChild(col1);
-	row.appendChild(col2);
+	row1.appendChild(col1);
+	row1.appendChild(col2);
 
-	var table = document.getElementById("list");
-	table.appendChild(row);
+	table.appendChild(row1);
 
 }
 
 function wlSearch() {
+	var name = document.getElementById("nameInput").value;
+	var url = document.getElementById("urlInput").value;
 
+	var table = document.getElementById("list");
+	
+	var rows = table.rows;
+	var cells, data, r, c;
+	var found = 0;
+
+	for (r = 0; r < rows.length; r++) {
+		cells = rows[r].cells;
+		for (c = 0; c < cells.length; c++) {
+			data = cells[c];
+			if (data == name || data == url) {
+				found = 1;
+				break;
+			}
+		}
+	}
+
+	if (found)
+		alert("Found.");
+	else
+		alert("Not found.");
 }
 
 function wlDelete() {
-	
+
 }
