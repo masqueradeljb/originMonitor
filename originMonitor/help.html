@@ -1,0 +1,43 @@
+<!doctype html>
+
+<!--
+Provide the web content of white list page
+-->
+
+<html>
+  <head>
+    <title>Origin Monitor</title>
+    <style>
+		body{
+		  background-color:white;
+		}
+	</style>
+	<script type="text/javascript" src="wlAdd.js"></script>
+  </head>
+
+  <body>
+  	<h2><p>White Lists:<br></p></h2>
+
+  	Current URLs in white lists:
+  	<table id="list" border="2" style="width:50%" bgcolor="linen">
+  		<tr>
+  			<td>Name</td>
+  			<td>URL</td>
+  		</tr>
+  		<tr>
+  			<td>Google</td>
+  			<td>https://www.google.com</td>
+  		</tr>
+
+  	</table>
+  	<br>
+
+  	Please input a Name: <input type="text" id="nameInput"><br>
+  	Please input a URL: <input type="text" id="urlInput" value="http://"><br>
+  	<button id="wlAdd"><u>Add</u></button>
+  	<button id="wlSearch"><u>Search</u></button>
+  	<button id="wlDelete"><u>Delete</u></button>
+  	<br>
+  	<p>Insert a URL and choose the action you want to take.
+
+  </body>
