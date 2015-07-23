@@ -44,7 +44,7 @@ chrome.runtime.onMessage.addListener(
 			sendResponse(origin);
 		}else{
 			blocking[request.blockurl]=1;
-			urls[request.tabid].block[request.blockurl]=1;
+			urls[request.tabid].block[request.blockurl]=0;
 			sendResponse({success:request.blockurl});
 		}
 		//sendResponse(type);

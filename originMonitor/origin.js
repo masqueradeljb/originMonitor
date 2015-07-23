@@ -113,8 +113,12 @@
 	for (var i in array) {
 			var row = document.createElement("tr");
 			var column1 = document.createElement("td");
-			if(array[i] in blockset)
-				column1.style.color="red";
+			if(array[i] in blockset){
+				if(blockset[array[i]]==1)
+					column1.style.color="red";
+				else
+					column1.style.color="blue";
+			}
 			column1.className=array[i];
 			var column2 = document.createElement("td");
 			var button = document.createElement("button");
