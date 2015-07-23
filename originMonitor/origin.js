@@ -1,3 +1,6 @@
+//var imgURL = chrome.extension.getURL("bg.jpg");
+//document.getElementById("someImage").src = imgURL;
+
  document.addEventListener('DOMContentLoaded',function(){
  	chrome.tabs.query({active:true,currentWindow: true},function(tabs){
 				var currentTabID=tabs[0].id;
