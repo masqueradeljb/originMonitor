@@ -2,7 +2,26 @@
 var urls=new Object();
 var blocking=new Object();
 chrome.webRequest.onBeforeRequest.addListener(
-	function(details){
+	blacklist
+	,{urls: ["*://*/*"]},
+	 ["blocking"]
+);
+
+chrome.runtime.onMessage.addListener(
+	function(request,sender,sendResponse){
+		if(request.flag==1){
+			var tabid = request.tabid;
+			var origin = JSON.stringify(urls[tabid]);
+			sendResponse(origin);
+		}else{
+			blocking[request.blockurl]=1;
+			urls[request.tabid].block[request.blockurl]=0;
+			sendResponse({success:request.blockurl});
+		}
+		//sendResponse(type);
+	});
+/*web request listener for black list*/
+function blacklist(details){
 		var url=details.url;
 		var origin = details.url.split('\/')[0] + "//" + details.url.split('\/')[2];
 		if(details.tabId!=-1){
@@ -31,24 +50,8 @@ chrome.webRequest.onBeforeRequest.addListener(
 			//add blocked url
 			return {cancel:true};
 		}
-	}
-	,{urls: ["*://*/*"]},
-	 ["blocking"]
-	);
+}
 
-chrome.runtime.onMessage.addListener(
-	function(request,sender,sendResponse){
-		if(request.flag==1){
-			var tabid = request.tabid;
-			var origin = JSON.stringify(urls[tabid]);
-			sendResponse(origin);
-		}else{
-			blocking[request.blockurl]=1;
-			urls[request.tabid].block[request.blockurl]=0;
-			sendResponse({success:request.blockurl});
-		}
-		//sendResponse(type);
-	});
 
 //deal with tab reload
 // chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){

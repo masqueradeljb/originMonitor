@@ -1,9 +1,15 @@
 //Deal with user input into the white list.
+var whitelist=[];
 
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('wlAdd').addEventListener('click',clickHandler1);
   document.getElementById('wlSearch').addEventListener('click',clickHandler2);
   document.getElementById('wlDelete').addEventListener('click',clickHandler3);
+  document.getElementById('startwl').addEventListener('click',function(){
+  	 chrome.runtime.sendMessage({
+
+  	 });
+  });
 });
 
 function clickHandler1(e) {
@@ -29,7 +35,11 @@ function wlAdd() {
 
 	col1.innerHTML = document.getElementById("nameInput").value;
 	col2.innerHTML = document.getElementById("urlInput").value;
-
+ 	var pair ={};
+ 	pair['name']=document.getElementById("nameInput").value;
+ 	pair['url']= document.getElementById("urlInput").value;
+ 	whitelist.push(pair);
+ 	
 	row1.appendChild(col1);
 	row1.appendChild(col2);
 
