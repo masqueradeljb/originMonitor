@@ -132,7 +132,7 @@
 				//send message to background
 				chrome.runtime.sendMessage({
 			     	blockurl:block_url,
-			     	flag:0,
+			     	flag:2,
 			     	tabid:currentTabID
 			     },
 			     function(response){

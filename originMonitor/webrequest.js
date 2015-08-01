@@ -90,6 +90,8 @@ function whitelist(details){
 			}
 			if( !(origin in white))
 				urls[details.tabId].block[origin]=1;
+			else 
+				delete urls[details.tabID].block[origin];
 		});	
 	}else
 		console.log("tab id:"+details.tabId+" url:"+details.url);
