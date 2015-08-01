@@ -6,8 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('wlSearch').addEventListener('click',clickHandler2);
   document.getElementById('wlDelete').addEventListener('click',clickHandler3);
   document.getElementById('startwl').addEventListener('click',function(){
+  	var white=JSON.stringify(whitelist);
   	 chrome.runtime.sendMessage({
-
+  	 	flag:3,
+  	 	white:white
   	 });
   });
 });
@@ -39,7 +41,11 @@ function wlAdd() {
  	pair['name']=document.getElementById("nameInput").value;
  	pair['url']= document.getElementById("urlInput").value;
  	whitelist.push(pair);
- 	
+
+ 	chrome.runtime.sendMessage({
+  	 	flag:4,
+  	 	url:pair.url
+  	 });
 	row1.appendChild(col1);
 	row1.appendChild(col2);
 
