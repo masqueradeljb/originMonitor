@@ -48,11 +48,13 @@ function wlAdd() {
 }
 
 function wlSearch() {
-	var name = document.getElementById("nameInput").value;
-	var url = document.getElementById("urlInput").value;
+
+	var name = document.getElementById("searchInput").value.toLowerCase();
+	//var url = document.getElementById("urlInput").value.toLowerCase();
 
 	var table = document.getElementById("list");
 	
+
 	var rows = table.rows;
 	var cells, data, r, c;
 	var found = 0;
@@ -60,19 +62,49 @@ function wlSearch() {
 	for (r = 0; r < rows.length; r++) {
 		cells = rows[r].cells;
 		for (c = 0; c < cells.length; c++) {
-			data = cells[c];
-			if (data === name || data === url) {
-				found = 1;
-			}
+			cells[c].style.backgroundColor = "linen";
 		}
 	}
 
-	if (found)
-		alert("Found.");
+	if (name != '') {
+		for (r = 0; r < rows.length; r++) {
+			cells = rows[r].cells;
+			for (c = 0; c < cells.length; c++) {
+				data = cells[c].innerHTML;
+				if (data.toLowerCase() === name) {
+					found = 1;
+					cells[c].style.backgroundColor = "yellow";
+				}
+			}
+		}
+
+		if (found == 1)
+			alert("Found.");
+		else
+			alert("Not found.");
+	}
 	else
-		alert("Not found.");
+		alert("Insert is illegal.");
 }
 
-function wlDelete() {
+	
 
+function wlDelete() {
+	var name = document.getElementById("deleteInput").value.toLowerCase();
+
+	var table = document.getElementById("list");
+
+	var rows = table.rows;
+	var cells, data, r, c;
+	var found = 0;
+
+	for (r = 0; r < rows.length; r++) {
+		cells = rows[r].cells;
+		for (c = 0; c < cells.length; c++) {
+			data = cells[c].innerHTML;
+			if (data.toLowerCase() === name) {
+				document.getElementById("list").deleteRow(r);
+			}
+		}
+	}
 }
