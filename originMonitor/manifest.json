@@ -18,6 +18,9 @@
   "background": {
      "scripts": ["webrequest.js"]
   },
+  "web_accessible_resources": [
+      "images/bg.jpg"
+  ],
 
   "content_scripts": [
     {

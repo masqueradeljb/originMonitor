@@ -51,9 +51,8 @@ function wlSearch() {
 		cells = rows[r].cells;
 		for (c = 0; c < cells.length; c++) {
 			data = cells[c];
-			if (data == name || data == url) {
+			if (data === name || data === url) {
 				found = 1;
-				break;
 			}
 		}
 	}
