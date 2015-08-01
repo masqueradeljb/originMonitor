@@ -97,14 +97,18 @@ function wlDelete() {
 	var rows = table.rows;
 	var cells, data, r, c;
 	var found = 0;
-
-	for (r = 0; r < rows.length; r++) {
-		cells = rows[r].cells;
-		for (c = 0; c < cells.length; c++) {
-			data = cells[c].innerHTML;
-			if (data.toLowerCase() === name) {
-				document.getElementById("list").deleteRow(r);
+    
+    if (name != '') {
+		for (r = 0; r < rows.length; r++) {
+			cells = rows[r].cells;
+			for (c = 0; c < cells.length; c++) {
+				data = cells[c].innerHTML;
+				if (data.toLowerCase() === name) {
+					document.getElementById("list").deleteRow(r);
+				}
 			}
 		}
 	}
+	else
+		alert("Insert is illegal.");
 }
