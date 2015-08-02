@@ -111,9 +111,12 @@ function wlDelete() {
 				data = cells[c].innerHTML;
 				if (data.toLowerCase() === name) {
 					document.getElementById("list").deleteRow(r);
+					found = 1;
 				}
 			}
 		}
+		if (found == 0)
+			alert("Can not find the name to delete.");
 	}
 	else
 		alert("Insert is illegal.");
