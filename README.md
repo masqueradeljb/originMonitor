@@ -1,3 +1,7 @@
 project for browser security class
-TODO: 1. when user navigate to a new url in tab. delete urls in current tab
-      2. categorizing the url and rewrite to origins
+TODO: 1. local storage
+      2. dynamic showing table in pop up
+      3. change mode in pop up
+      4. add intermediate mode
+  
+     
