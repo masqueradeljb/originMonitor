@@ -14,6 +14,13 @@ chrome.runtime.onMessage.addListener(
 		//flag=1 means get the pop mene data
 		if(request.flag==1){
 			var tabid = request.tabid;
+			//check white list unblock status
+			if(white['on']!=undefined){
+				for(var i in urls[tabid].block){
+					if(i in white)
+						urls[tabid].block[i]=undefined;
+				}
+			}
 			var origin = JSON.stringify(urls[tabid]);
 			sendResponse(origin);
 		}else if(request.flag==2){ //flag = 2 means update block info
@@ -24,6 +31,7 @@ chrome.runtime.onMessage.addListener(
 			chrome.webRequest.onBeforeRequest.removeListener(blacklist);
 			urls=new Object();
 			blocking=new Object();
+			white['on']=1;
 			var list=JSON.parse(request.white);
 			for(var i in list)
 				white[list[i].url]=1;
@@ -31,6 +39,7 @@ chrome.runtime.onMessage.addListener(
 	 												["blocking"]);
 		}else if(request.flag==4){  //add white list
 			white[request.url]=1;
+
 		}
 		//sendResponse(type);
 	});
@@ -72,7 +81,7 @@ function whitelist(details){
 	var origin = details.url.split('\/')[0] + "//" + details.url.split('\/')[2];
 	if(details.tabId!=-1){
 		chrome.tabs.get(details.tabId, function(tab){
-			console.log("tab id:"+details.tabId+"tab url:"+tab.url+" url:"+details.url);
+			//console.log("tab id:"+details.tabId+"tab url:"+tab.url+" url:"+details.url);
 			
 			if(details.tabId in urls){
 					if(urls[details.tabId].dom!=tab.url){
@@ -88,13 +97,19 @@ function whitelist(details){
 				urls[details.tabId].origin=[];
 				urls[details.tabId].origin.push(url);
 			}
-			if( !(origin in white))
+			
+			if( !(origin in white)){
 				urls[details.tabId].block[origin]=1;
-			else 
-				delete urls[details.tabID].block[origin];
+				console.log("block origin :"+origin);
+			}else {
+				urls[details.tabID].block[origin]=undefined;
+				console.log("unblock block origin :"+origin);
+			}
+
 		});	
 	}else
-		console.log("tab id:"+details.tabId+" url:"+details.url);
+		;
+		//console.log("tab id:"+details.tabId+" url:"+details.url);
 	if( !(origin in white)){
 		//add blocked url
 		return {cancel:true};
