@@ -117,6 +117,19 @@ function wlDelete() {
 		}
 		if (found == 0)
 			alert("Can not find the name to delete.");
+		else{
+			for(var i in whitelist){
+				if(whitelist[i].name==name){
+					var url = whitelist[i].url;
+					if(i>-1)
+						whitelist.splice(i,1);
+					chrome.runtime.sendMessage({
+				  	 	flag:5,
+				  	 	url:url
+				  	 });
+				}
+			}
+		}
 	}
 	else
 		alert("Insert is illegal.");

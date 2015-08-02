@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener(
 			if(white['on']!=undefined){
 				for(var i in urls[tabid].block){
 					if(i in white)
-						urls[tabid].block[i]=undefined;
+						delete urls[tabid].block[i];
 				}
 			}
 			var origin = JSON.stringify(urls[tabid]);
@@ -40,6 +40,8 @@ chrome.runtime.onMessage.addListener(
 		}else if(request.flag==4){  //add white list
 			white[request.url]=1;
 
+		}else if(request.flag==5){
+			delete white[request.url];
 		}
 		//sendResponse(type);
 	});
