@@ -2,15 +2,18 @@
 var whitelist=[];
 
 document.addEventListener('DOMContentLoaded', function() {
+	chrome.storage.sync.get('whitelist',function(result){
+			whitelist=result.whitelist;
+		});
   document.getElementById('wlAdd').addEventListener('click',clickHandler1);
   document.getElementById('wlSearch').addEventListener('click',clickHandler2);
   document.getElementById('wlDelete').addEventListener('click',clickHandler3);
   document.getElementById('startwl').addEventListener('click',function(){
-  	var white=JSON.stringify(whitelist);
-  	 chrome.runtime.sendMessage({
-  	 	flag:3,
-  	 	white:white
-  	 });
+	var white=JSON.stringify(whitelist);
+	 	chrome.runtime.sendMessage({
+	 		flag:3,
+	 		white:white
+	 	});
   });
 });
 
@@ -50,6 +53,7 @@ function wlAdd() {
 	row1.appendChild(col2);
 
 	table.appendChild(row1);
+	chrome.storage.sync.set({'whitelist':whitelist});
 
 }
 
@@ -127,6 +131,7 @@ function wlDelete() {
 				  	 	flag:5,
 				  	 	url:url
 				  	 });
+					chrome.storage.sync.set({'whitelist':whitelist});
 				}
 			}
 		}
