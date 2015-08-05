@@ -16,10 +16,11 @@ function clickHandler2(e) {
 }
 
 function newTab() {
-  chrome.tabs.create({url: 'help.html'});
+  	chrome.tabs.create({url: 'help.html'});
 }
 
 function display() {
+
  chrome.runtime.sendMessage({
 	 		flag:6
 	 	});
