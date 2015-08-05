@@ -10,6 +10,7 @@
 			     	flag:1
 			     },
 			     	function(response){
+			     		console.log(response);
 			     		var obj = JSON.parse(response);
 			     		var domain = document.getElementById("domain");
 			     		var domOrigin = obj.dom.split('\/')[0] + "//" + obj.dom.split('\/')[2];
@@ -182,11 +183,30 @@
 			     },
 			     function(response){
 			     	console.log(response.success);
-			     }
-			     );
+			     });
+			});
+			var button_unblock=document.createElement("button");
+			button_unblock.innerHTML="unblock!";
+			button_unblock.name=array[i];
+			button_unblock.addEventListener("click",function(e){
+				var unblock_url=e.target.name;
+				var ele=document.getElementsByClassName(e.target.name);
+				for(var k=0;k<ele.length;k++)
+					ele[k].style.color="grey";
+				//send message to background
+				chrome.runtime.sendMessage({
+			     	unblockurl:unblock_url,
+			     	flag:7,
+			     	tabid:currentTabID
+			     },
+			     function(response){
+			     	console.log(response.success);
+			     });
 			});
 			if( !(array[i] in blockset))
 				column2.appendChild(button);
+			else
+				column2.appendChild(button_unblock);
 			column1.innerHTML = array[i];
 			row.appendChild(column1);
 			row.appendChild(column2);

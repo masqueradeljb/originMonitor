@@ -13,6 +13,7 @@ init();
 
 /*default black list initialization*/
 function init(){
+	chrome.webRequest.onBeforeRequest.removeListener(whitelist);
 	chrome.webRequest.onBeforeRequest.addListener(
 		blacklist
 		,{urls: ["*://*/*"]},
@@ -76,19 +77,14 @@ chrome.runtime.onMessage.addListener(
 		}else if(request.flag==6){ //start blacklist mode
 			mode=0;
 			//get black list from storage
-			chrome.storage.sync.get('blacklist',function(result){
-				if(result.blacklist!=undefined)
-					blocking=result.blacklist;
-				else
-					blocking=new Object();
-				//clear whitelist
-				white=new Object();
-				chrome.webRequest.onBeforeRequest.addListener(
-					blacklist
-					,{urls: ["*://*/*"]},
-					 ["blocking"]
-				);
-			});
+			init();
+		}else if(request.flag==7 && mode==0){ // unblock origin in blacklist
+			if(request.unblockurl in blocking)
+				delete blocking[request.unblockurl];
+			if(request.unblockurl in urls[request.tabid].block)
+				delete urls[request.tabid].block[request.unblockurl];
+			sendResponse({success:request.unblockurl});
+			chrome.storage.sync.set({'blacklist':blocking});
 		}
 	});
 
@@ -98,7 +94,7 @@ function blacklist(details){
 	var origin = details.url.split('\/')[0] + "//" + details.url.split('\/')[2];
 	if(details.tabId!=-1){
 		chrome.tabs.get(details.tabId, function(tab){
-			//console.log("tab id:"+details.tabId+"tab url:"+tab.url+" url:"+details.url);
+			console.log("tab id:"+details.tabId+"tab url:"+tab.url+" url:"+details.url);
 			if(details.tabId in urls){
 				if(urls[details.tabId].dom!=tab.url){
 					urls[details.tabId].dom=tab.url;
@@ -116,10 +112,12 @@ function blacklist(details){
 			if(origin in blocking)
 				urls[details.tabId].block[origin]=1;
 			});
-	}else
-		//console.log("tab id:"+details.tabId+" url:"+details.url);
+	}
+	//else
+	//	console.log("tab id:"+details.tabId+" url:"+details.url);
 	if(origin in blocking){
 		//add blocked url
+		console.log("blacklist block origin :"+origin);
 		return {cancel:true};
 	}
 }
@@ -152,7 +150,7 @@ function whitelist(details){
 				console.log("block origin :"+origin);
 			}else {
 				urls[details.tabID].block[origin]=undefined;
-				console.log("unblock block origin :"+origin);
+				console.log("whitelist block origin :"+origin);
 			}
 
 		});	

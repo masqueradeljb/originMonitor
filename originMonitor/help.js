@@ -20,5 +20,9 @@ function newTab() {
 }
 
 function display() {
- 	document.getElementById("monitor").style.visibility = "visible";
+
+ chrome.runtime.sendMessage({
+	 		flag:6
+	 	});
+ document.getElementById("monitor").style.visibility="visible";
 }
