@@ -1,6 +1,12 @@
 
+//mode determine black list or whitelist mode
+//0 is black 1 is white
+var mode=0;
+//urls contain urls for each tab.
 var urls=new Object();
+//blocking set contains url for current blocked origin
 var blocking=new Object();
+//white contain white list origin if in white list mode
 var white=new Object();
 
 chrome.webRequest.onBeforeRequest.addListener(
@@ -11,11 +17,11 @@ chrome.webRequest.onBeforeRequest.addListener(
 
 chrome.runtime.onMessage.addListener(
 	function(request,sender,sendResponse){
-		//flag=1 means get the pop mene data
+		//flag=1 means get the pop menu data
 		if(request.flag==1){
 			var tabid = request.tabid;
 			//check white list unblock status
-			if(white['on']!=undefined){
+			if(mode==1){
 				for(var i in urls[tabid].block){
 					if(i in white)
 						delete urls[tabid].block[i];
@@ -23,27 +29,44 @@ chrome.runtime.onMessage.addListener(
 			}
 			var origin = JSON.stringify(urls[tabid]);
 			sendResponse(origin);
-		}else if(request.flag==2){ //flag = 2 means update block info
+		}else if(request.flag==2 && mode==0){ //flag = 2 means update blacklist block orgin
+			if()
 			blocking[request.blockurl]=1;
 			urls[request.tabid].block[request.blockurl]=0;
 			sendResponse({success:request.blockurl});
-		}else if(request.flag==3){ //flag ==3 start white list
+			chrome.storage.sync.set({'blacklist':block})
+		}else if(request.flag==3){ //flag ==3 start whitelist mode
+			mode=1;
 			chrome.webRequest.onBeforeRequest.removeListener(blacklist);
 			urls=new Object();
-			blocking=new Object();
-			white['on']=1;
+			//storage black list
+			chrome.storage.sync.set({'blacklist':block},function(result){
+				//clear current block set after store the black list.
+				blocking=new Object();
+			})
 			var list=JSON.parse(request.white);
 			for(var i in list)
 				white[list[i].url]=1;
 			chrome.webRequest.onBeforeRequest.addListener(whitelist,{urls: ["*://*/*"]},
 	 												["blocking"]);
-		}else if(request.flag==4){  //add white list
-			white[request.url]=1;
+		}else if(request.flag==4 && mode==1){  //add white list
+			white[request.url]=1;	
 
-		}else if(request.flag==5){
+		}else if(request.flag==5 && mode==1){	//delete origin from white list
 			delete white[request.url];
+
+		}else if(request.flag==6){ //start blacklist mode
+			mode=0;
+			//get black list from storage
+			chrome.storage.sync.get('blacklist',function(result){
+				if(result.blacklist!=undefined)
+					block=result.blacklist;
+				else
+					block=new Object();
+				//clear whitelist
+				white=new Object();
+			})
 		}
-		//sendResponse(type);
 	});
 /*web request listener for black list*/
 function blacklist(details){
