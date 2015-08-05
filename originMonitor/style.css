@@ -5,4 +5,6 @@ body {
 	height: 600px;
 	font-family: Arial;
 	font-size: medium;
+	/*visibility: hidden;*/
 }
+
