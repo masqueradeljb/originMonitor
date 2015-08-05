@@ -10,7 +10,7 @@
 			     	flag:1
 			     },
 			     	function(response){
-
+			     		console.log(response);
 			     		var obj = JSON.parse(response);
 
 			     		var domain=document.getElementById("domain");
