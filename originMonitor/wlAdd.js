@@ -3,7 +3,11 @@ var whitelist=[];
 
 document.addEventListener('DOMContentLoaded', function() {
 	chrome.storage.sync.get('whitelist',function(result){
-			whitelist=result.whitelist;
+			if(result.whitelist!=undefined)
+				whitelist=result.whitelist;
+			else
+				whitelist=[];
+			wlInit();
 		});
   document.getElementById('wlAdd').addEventListener('click',clickHandler1);
   document.getElementById('wlSearch').addEventListener('click',clickHandler2);
@@ -27,6 +31,24 @@ function clickHandler2(e) {
 
 function clickHandler3(e) {
   setTimeout(wlDelete, 10);
+}
+
+function wlInit() {
+	var table = document.getElementById("list");
+	for (var i = 0; i < whitelist.length; i++) {
+		var tr = document.createElement('tr');
+		var td1 = document.createElement('td');
+		var td2 = document.createElement('td');
+
+		var txt1 = whitelist[i].name;
+		var txt2 = whitelist[i].url;
+
+		td1.innerHTML=txt1;
+		td2.innerHTML=txt2;
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		table.appendChild(tr);
+	}
 }
 
 function wlAdd() {
