@@ -36,9 +36,9 @@ function clickHandler3(e) {
 function wlInit() {
 	var table = document.getElementById("list");
 	for (var i = 0; i < whitelist.length; i++) {
-		var tr = document.createElement('tr');
-		var td1 = document.createElement('td');
-		var td2 = document.createElement('td');
+		var tr = document.createElement("tr");
+		var td1 = document.createElement("td");
+		var td2 = document.createElement("td");
 
 		var txt1 = whitelist[i].name;
 		var txt2 = whitelist[i].url;
@@ -63,7 +63,7 @@ function wlAdd() {
 	col1.innerHTML = document.getElementById("nameInput").value;
 	col2.innerHTML = document.getElementById("urlInput").value;
  	var pair ={};
- 	pair['name']=document.getElementById("nameInput").value;
+ 	pair['name'] = document.getElementById("nameInput").value;
  	pair['url']= document.getElementById("urlInput").value;
  	whitelist.push(pair);
 

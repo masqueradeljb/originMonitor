@@ -10,16 +10,14 @@
 			     	flag:1
 			     },
 			     	function(response){
-
 			     		var obj = JSON.parse(response);
-
-			     		var domain=document.getElementById("domain");
-			     		var domOrigin=obj.dom.split('\/')[0] + "//" + obj.dom.split('\/')[2];
-			     		domain.innerHTML="Website: "+domOrigin;
+			     		var domain = document.getElementById("domain");
+			     		var domOrigin = obj.dom.split('\/')[0] + "//" + obj.dom.split('\/')[2];
+			     		domain.innerHTML = "Website: "+domOrigin;
 
 			     		var originset = {};
-			     		var blockset=obj.block;
-			     		for(var j = 0;j < obj.origin.length;++j){
+			     		var blockset = obj.block;
+			     		for(var j = 0; j < obj.origin.length; ++j){
 			     			//var origin = document.createElement("p");
 			     			var origin = obj.origin[j].split('\/')[0] + "//" + obj.origin[j].split('\/')[2];
 			     			var type = obj.origin[j].split('\/').pop().split('.').pop();
@@ -90,9 +88,56 @@
 			    
 			     		}
 
-			     		var image = document.getElementById('image');
-			     		appendUrl(image,imagearr,blockset,currentTabID);
-			     		var doc = document.getElementById('doc');
+			     		var monitor = document.getElementById('monitor');
+			     		if (imagearr.length != 0) {
+			     			var image = document.createElement('table');
+			     			var tr = document.createElement('tr');
+			     			tr.innerHTML = "Image:";
+			     			image.appendChild(tr);
+			     			appendUrl(image,imagearr,blockset,currentTabID);
+			     			monitor.appendChild(image);
+			     		}
+			     		if (docarr.length != 0) {
+			     			var doc = document.createElement("table");
+			     			var tr = document.createElement("tr");
+			     			tr.innerHTML = "Document:";
+			     			doc.appendChild(tr);
+			     			appendUrl(doc,docarr,blockset,currentTabID);
+			     			monitor.appendChild(doc);
+			     		}
+			     		if (fontsarr.length != 0) {
+			     			var fonts = document.createElement("table");
+			     			var tr = document.createElement("tr");
+			     			tr.innerHTML = "Font:";
+			     			fonts.appendChild(tr);
+			     			appendUrl(fonts,fontsarr,blockset,currentTabID);
+			     			monitor.appendChild(fonts);
+			     		}
+			     		if (scriptarr.length != 0) {
+			     			var script = document.createElement("table");
+			     			var tr = document.createElement("tr");
+			     			tr.innerHTML = "Script:";
+			     			script.appendChild(tr);
+			     			appendUrl(script,scriptarr,blockset,currentTabID);
+			     			monitor.appendChild(script);
+			     		}
+			     		if (cssarr.length != 0) {
+			     			var css = document.createElement("table");
+			     			var tr = document.createElement("tr");
+			     			tr.innerHTML = "CSS:";
+			     			css.appendChild(tr);
+			     			appendUrl(css,cssarr,blockset,currentTabID);
+			     			monitor.appendChild(css);
+			     		}
+			     		if (othersarr.length != 0) {
+			     			var others = document.createElement("table");
+			     			var tr = document.createElement("tr");
+			     			tr.innerHTML = "Others:";
+			     			others.appendChild(tr);
+			     			appendUrl(others,othersarr,blockset,currentTabID);		
+			     			monitor.appendChild(others);
+			     		}
+			     		/*var doc = document.getElementById('doc');
 			     		appendUrl(doc,docarr,blockset,currentTabID);
 			     		var fonts = document.getElementById('fonts');
 			     		appendUrl(fonts,fontsarr,blockset,currentTabID);
@@ -101,7 +146,7 @@
 			     		var css = document.getElementById('css');
 			     		appendUrl(css,cssarr,blockset,currentTabID);
 			     		var others = document.getElementById('others');
-			     		appendUrl(others,othersarr,blockset,currentTabID);
+			     		appendUrl(others,othersarr,blockset,currentTabID);*/
 			     	}
 			     );
 		});

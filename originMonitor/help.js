@@ -16,9 +16,9 @@ function clickHandler2(e) {
 }
 
 function newTab() {
-  chrome.tabs.create({url: 'help.html'});
+  	chrome.tabs.create({url: 'help.html'});
 }
 
 function display() {
- document.getElementById("monitor").style.visibility="visible";
+ 	document.getElementById("monitor").style.visibility = "visible";
 }
