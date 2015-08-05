@@ -34,6 +34,7 @@ function clickHandler3(e) {
 }
 
 function wlInit() {
+
 	var table = document.getElementById("list");
 	for (var i = 0; i < whitelist.length; i++) {
 		var tr = document.createElement("tr");
@@ -60,12 +61,36 @@ function wlAdd() {
 	var col1 = document.createElement("td");
 	var col2 = document.createElement("td");
 
-	col1.innerHTML = document.getElementById("nameInput").value;
-	col2.innerHTML = document.getElementById("urlInput").value;
+	var rows = table.rows;
+	var cells, data, r, c;
+	var found = 0;
+
+	
  	var pair ={};
  	pair['name'] = document.getElementById("nameInput").value;
  	pair['url']= document.getElementById("urlInput").value;
- 	whitelist.push(pair);
+
+ 	for (r = 0; r < rows.length; r++) {
+		cells = rows[r].cells;
+		for (c = 0; c < cells.length; c+=2) {
+			if (pair['name'] == cells[c].innerHTML) {
+ 				found = 1;
+ 				alert("Duplicates exist!");
+ 				break;
+ 			}
+ 		}
+	}
+	if (pair['name'] == "" || !pair['url'].toLowerCase().match(/[a-z]+:\/\/.+(:[0-9]+)?/)){
+		alert("Input is invalid!");
+		return;
+	}
+
+	if (found == 0) {
+		col1.innerHTML = document.getElementById("nameInput").value;
+		col2.innerHTML = document.getElementById("urlInput").value;
+		whitelist.push(pair);
+	}else
+		return;
 
  	chrome.runtime.sendMessage({
   	 	flag:4,
@@ -73,7 +98,6 @@ function wlAdd() {
   	 });
 	row1.appendChild(col1);
 	row1.appendChild(col2);
-
 	table.appendChild(row1);
 	chrome.storage.sync.set({'whitelist':whitelist});
 
@@ -145,7 +169,7 @@ function wlDelete() {
 			alert("Can not find the name to delete.");
 		else{
 			for(var i in whitelist){
-				if(whitelist[i].name==name){
+				if(whitelist[i].name!=null && whitelist[i].name==name){
 					var url = whitelist[i].url;
 					if(i>-1)
 						whitelist.splice(i,1);
@@ -159,5 +183,5 @@ function wlDelete() {
 		}
 	}
 	else
-		alert("Insert is illegal.");
+		alert("Insert is illegal!");
 }
