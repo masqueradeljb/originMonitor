@@ -202,7 +202,7 @@
 				var unblock_url = e.target.name;
 				var ele = document.getElementsByClassName(e.target.name);
 				for(var k = 0;k<ele.length;k++)
-					ele[k].style.color = "grey";
+					ele[k].style.color = "Grey";
 				//send message to background
 				chrome.runtime.sendMessage({
 			     	unblockurl:unblock_url,

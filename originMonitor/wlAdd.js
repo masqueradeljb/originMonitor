@@ -158,7 +158,8 @@ function wlDelete() {
 	var cells, data, r, c;
 	var found = 0;
     
-    if (name != "") {
+    if (name != "" && name.toLowerCase() != "name" 
+    		       && name.toLowerCase() != "url") {
 		for (r = 0; r < rows.length; r++) {
 			console.log(rows.length);
 			console.log(r);
@@ -176,9 +177,9 @@ function wlDelete() {
 			alert("Can not find the name to delete.");
 		else{
 			for(var i in whitelist){
-				if(whitelist[i].name!=null && whitelist[i].name==name){
+				if(whitelist[i].name != null && whitelist[i].name.toLowerCase() == name){
 					var url = whitelist[i].url;
-					if(i>-1)
+					if(i > -1)
 						whitelist.splice(i,1);
 					chrome.runtime.sendMessage({
 				  	 	flag:5,
