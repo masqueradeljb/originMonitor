@@ -7,18 +7,14 @@ Provide the web content of white list page
 <html>
   <head>
     <title>Origin Monitor</title>
-    <style>
-		body{
-		  background-color:white;
-		}
-	</style>
+    <link rel="stylesheet" type="text/css" href="style.css"></link>
 	<script type="text/javascript" src="wlAdd.js"></script>
   </head>
 
   <body>
   	<h2><p>White Lists:<br></p></h2>
 
-  	Current URLs in white lists:
+  	<p>Current URLs in white lists:</p>
   	<table id="list" border="2" style="width:50%" bgcolor="linen">
   		<tr>
   			<td>Name</td>
@@ -27,18 +23,18 @@ Provide the web content of white list page
   	</table>
   	<br>
 
-  	Please insert a Name: <input type="text" id="nameInput"><br>
-  	Please insert a URL: <input type="text" id="urlInput" value="http://">
+  	<p>Please insert a Name: <input type="text" id="nameInput"><br></p>
+  	<p>Please insert a URL: <input type="text" id="urlInput" value="http://"></p>
   	<button id="wlAdd"><u>Add</u></button>
     <p>Insert a name with a URL to add it to white list.<br><br><br>
-    Please insert a name to search: <input type="text" id="searchInput">
+    Please insert a name to search: <input type="text" id="searchInput"></p>
   	<button id="wlSearch"><u>Search</u></button>
     <p>Search to see if a string is inside the white list.<br><br><br>
-    Please insert a name to delete the entire record: <input type="text" id="deleteInput">
+    Please insert a name to delete the entire record: <input type="text" id="deleteInput"></p>
   	<button id="wlDelete"><u>Delete</u></button>
-    <p>Insert a name and delete the record with the exact name.<br><br><br>
+    <p>Insert a name and delete the record with the exact name.<br><br><br></p>
 
-    Click to Start the white list mode.<br>
+    <p>Click to Start the white list mode.<br></p>
     <button id="startwl"><u>Start White List</u></button>
   	<br><br><br>
 

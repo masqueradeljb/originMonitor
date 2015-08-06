@@ -1,5 +1,5 @@
-//var imgURL = chrome.extension.getURL("bg.jpg");
-//document.getElementById("someImage").src = imgURL;
+//Deal with the modification in popup window.
+//Deal with the communication with background.
 
  document.addEventListener('DOMContentLoaded',function(){
  	chrome.tabs.query({active:true,currentWindow: true},function(tabs){
@@ -12,58 +12,68 @@
 			     	function(response){
 			     		console.log(response);
 			     		var obj = JSON.parse(response);
-			     		var domain = document.getElementById("domain");
-			     		var domOrigin = obj.dom.split('\/')[0] + "//" + obj.dom.split('\/')[2];
-			     		domain.innerHTML = "Website: "+domOrigin;
-
-			     		var originset = {};
-			     		var blockset = obj.block;
-			     		for(var j = 0; j < obj.origin.length; ++j){
-			     			//var origin = document.createElement("p");
-			     			var origin = obj.origin[j].split('\/')[0] + "//" + obj.origin[j].split('\/')[2];
-			     			var type = obj.origin[j].split('\/').pop().split('.').pop();
-
-			     			//if (type.innerHTML.match(/.*(png|img|gif|jpeg|jpg).*/)) 
-			     			
-			     			if (origin in originset) {
-			     				if (type.toLowerCase().match(/.*(png|img|gif|jpeg|jpg).*/)) 
-			     					originset[origin].image = true;
-			     				else if (type.toLowerCase().match(/.*(html|htm|txt|doc|xls|docx|xlsx|pdf).*/))
-			     					originset[origin].doc = true;
-			     				else if (type.toLowerCase().match(/.*(ttf|otf|woff|eot).*/))
-			     					originset[origin].fonts = true;
-			     				else if (type.toLowerCase().match(/.*(js|php|asp|jsp).*/))
-			     					originset[origin].script = true;
-			     				else if (type.toLowerCase().match(/.*(css).*/))
-			     					originset[origin].css = true;
-			     				else
-			     					originset[origin].others = true;
+			     		if (obj == null)
+			     			{
+			     				var domain = document.getElementById("domain");
+			     				domain.innerHTML = "Blank webpage!"
+			     				domain.style.color = "Brown";
+			     				domain.style.fontSize = "20px";
 			     			}
-			     			else {
-			     				originset[origin] = new Object ();
-			     				originset[origin].image = false;
-			     				originset[origin].doc = false;
-			     				originset[origin].fonts = false;
-			     				originset[origin].script = false;
-			     				originset[origin].css = false;
-			     				originset[origin].others =false;
+			     		else {
+				     		var domain = document.getElementById("domain");
+				     		var domOrigin = obj.dom.split('\/')[0] + "//" + obj.dom.split('\/')[2];
+				     		domain.innerHTML = "Website: "+ domOrigin;
+				     		domain.style.color = "Brown";
+				     		domain.style.fontSize = "20px";
+				     		domain.style.fontFamily = "Arial";
 
-			     				if (type.match(/.*(png|img|gif|jpeg|jpg).*/)) 
-			     					originset[origin].image = true;
-			     				else if (type.toLowerCase().match(/.*(html|htm|txt|doc|xls|docx|xlsx).*/))
-			     					originset[origin].doc = true;
-			     				else if (type.toLowerCase().match(/.*(ttf|otf|woff|eot).*/))
-			     					originset[origin].fonts = true;
-			     				else if (type.toLowerCase().match(/.*(js|php|asp|jsp).*/))
-			     					originset[origin].script = true;
-			     				else if (type.toLowerCase().match(/.*(css).*/))
-			     					originset[origin].css = true;
-			     				else
-			     					originset[origin].others = true;
+				     		var originset = {};
+				     		var blockset = obj.block;
+				     		for(var j = 0; j < obj.origin.length; ++j){
+				     			//var origin = document.createElement("p");
+				     			var origin = obj.origin[j].split('\/')[0] + "//" + obj.origin[j].split('\/')[2];
+				     			var type = obj.origin[j].split('\/').pop().split('.').pop();
 
-			     			}
+				     			//if (type.innerHTML.match(/.*(png|img|gif|jpeg|jpg).*/)) 
+				     			
+				     			if (origin in originset) {
+				     				if (type.toLowerCase().match(/.*(png|img|gif|jpeg|jpg).*/)) 
+				     					originset[origin].image = true;
+				     				else if (type.toLowerCase().match(/.*(html|htm|txt|doc|xls|docx|xlsx|pdf).*/))
+				     					originset[origin].doc = true;
+				     				else if (type.toLowerCase().match(/.*(ttf|otf|woff|eot).*/))
+				     					originset[origin].fonts = true;
+				     				else if (type.toLowerCase().match(/.*(js|php|asp|jsp).*/))
+				     					originset[origin].script = true;
+				     				else if (type.toLowerCase().match(/.*(css).*/))
+				     					originset[origin].css = true;
+				     				else
+				     					originset[origin].others = true;
+				     			}
+				     			else {
+				     				originset[origin] = new Object ();
+				     				originset[origin].image = false;
+				     				originset[origin].doc = false;
+				     				originset[origin].fonts = false;
+				     				originset[origin].script = false;
+				     				originset[origin].css = false;
+				     				originset[origin].others = false;
 
+				     				if (type.match(/.*(png|img|gif|jpeg|jpg).*/)) 
+				     					originset[origin].image = true;
+				     				else if (type.toLowerCase().match(/.*(html|htm|txt|doc|xls|docx|xlsx).*/))
+				     					originset[origin].doc = true;
+				     				else if (type.toLowerCase().match(/.*(ttf|otf|woff|eot).*/))
+				     					originset[origin].fonts = true;
+				     				else if (type.toLowerCase().match(/.*(js|php|asp|jsp).*/))
+				     					originset[origin].script = true;
+				     				else if (type.toLowerCase().match(/.*(css).*/))
+				     					originset[origin].css = true;
+				     				else
+				     					originset[origin].others = true;
+			     				}
 			     		}
+			     	}
 
 			     		var imagearr = [];
 			     		var docarr = [];
@@ -160,21 +170,21 @@
 			var row = document.createElement("tr");
 			var column1 = document.createElement("td");
 			if(array[i] in blockset){
-				if(blockset[array[i]]==1)
-					column1.style.color="red";
+				if(blockset[array[i]] == 1)
+					column1.style.color = "Red";
 				else
-					column1.style.color="blue";
+					column1.style.color = "Blue";
 			}
-			column1.className=array[i];
+			column1.className = array[i];
 			var column2 = document.createElement("td");
 			var button = document.createElement("button");
-			button.innerHTML="block!";
-			button.name=array[i];
+			button.innerHTML = "Block!";
+			button.name = array[i];
 			button.addEventListener("click",function(e){
-				var block_url=e.target.name;
-				var ele=document.getElementsByClassName(e.target.name);
-				for(var k=0;k<ele.length;k++)
-					ele[k].style.color="blue";
+				var block_url = e.target.name;
+				var ele = document.getElementsByClassName(e.target.name);
+				for(var k = 0;k < ele.length;k++)
+					ele[k].style.color = "Blue";
 				//send message to background
 				chrome.runtime.sendMessage({
 			     	blockurl:block_url,
@@ -185,14 +195,14 @@
 			     	console.log(response.success);
 			     });
 			});
-			var button_unblock=document.createElement("button");
-			button_unblock.innerHTML="unblock!";
-			button_unblock.name=array[i];
+			var button_unblock = document.createElement("button");
+			button_unblock.innerHTML = "Unblock!";
+			button_unblock.name = array[i];
 			button_unblock.addEventListener("click",function(e){
-				var unblock_url=e.target.name;
-				var ele=document.getElementsByClassName(e.target.name);
-				for(var k=0;k<ele.length;k++)
-					ele[k].style.color="grey";
+				var unblock_url = e.target.name;
+				var ele = document.getElementsByClassName(e.target.name);
+				for(var k = 0;k<ele.length;k++)
+					ele[k].style.color = "grey";
 				//send message to background
 				chrome.runtime.sendMessage({
 			     	unblockurl:unblock_url,

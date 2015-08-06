@@ -1,4 +1,5 @@
 //Deal with user input into the white list.
+
 var whitelist=[];
 
 document.addEventListener('DOMContentLoaded', function() {
