@@ -70,6 +70,12 @@ function wlAdd() {
  	pair['name'] = document.getElementById("nameInput").value;
  	pair['url']= document.getElementById("urlInput").value;
 
+	if (pair['name'] == "" || 
+		!pair['url'].toLowerCase().match(/[a-z]+:\/\/.+(:[0-9]+)?/)){
+		alert("Input is invalid!");
+		return;
+	}
+
  	for (r = 0; r < rows.length; r++) {
 		cells = rows[r].cells;
 		for (c = 0; c < cells.length; c+=2) {
@@ -80,10 +86,7 @@ function wlAdd() {
  			}
  		}
 	}
-	if (pair['name'] == "" || !pair['url'].toLowerCase().match(/[a-z]+:\/\/.+(:[0-9]+)?/)){
-		alert("Input is invalid!");
-		return;
-	}
+	
 
 	if (found == 0) {
 		col1.innerHTML = document.getElementById("nameInput").value;
@@ -154,14 +157,17 @@ function wlDelete() {
 	var cells, data, r, c;
 	var found = 0;
     
-    if (name != '') {
+    if (name != "") {
 		for (r = 0; r < rows.length; r++) {
+			console.log(rows.length);
+			console.log(r);
 			cells = rows[r].cells;
 			for (c = 0; c < cells.length; c++) {
 				data = cells[c].innerHTML;
 				if (data.toLowerCase() === name) {
 					document.getElementById("list").deleteRow(r);
 					found = 1;
+					break;
 				}
 			}
 		}
