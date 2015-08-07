@@ -123,7 +123,11 @@ function wlSearch() {
 	for (r = 0; r < rows.length; r++) {
 		cells = rows[r].cells;
 		for (c = 0; c < cells.length; c++) {
-			cells[c].style.backgroundColor = "linen";
+			if (r % 2 == 0) {
+				cells[c].style.backgroundColor = "#7f0000";
+			}
+			else
+				cells[c].style.backgroundColor = "#ffffff";
 		}
 	}
 
@@ -134,7 +138,7 @@ function wlSearch() {
 				data = cells[c].innerHTML;
 				if (data.toLowerCase() === name) {
 					found = 1;
-					cells[c].style.backgroundColor = "yellow";
+					cells[c].style.backgroundColor = "lightblue";
 				}
 			}
 		}
