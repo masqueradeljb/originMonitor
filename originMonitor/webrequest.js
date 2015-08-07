@@ -126,23 +126,25 @@ function blacklist(details){
 	var origin = details.url.split('\/')[0] + "//" + details.url.split('\/')[2];
 	if(details.tabId!=-1){
 		chrome.tabs.get(details.tabId, function(tab){
-			console.log("tab id:"+details.tabId+"tab url:"+tab.url+" url:"+details.url);
-			if(details.tabId in urls){
-				if(urls[details.tabId].dom!=tab.url){
+			if(tab!=undefined){
+					console.log("tab id:"+details.tabId+"tab url:"+tab.url+" url:"+details.url);
+				if(details.tabId in urls){
+					if(urls[details.tabId].dom!=tab.url){
+						urls[details.tabId].dom=tab.url;
+						urls[details.tabId].origin=[];
+						urls[details.tabId].block=new Object();
+					}
+					urls[details.tabId].origin.push(url);
+				}else{
+					urls[details.tabId]=new Object();
 					urls[details.tabId].dom=tab.url;
-					urls[details.tabId].origin=[];
 					urls[details.tabId].block=new Object();
+					urls[details.tabId].origin=[];
+					urls[details.tabId].origin.push(url);
 				}
-				urls[details.tabId].origin.push(url);
-			}else{
-				urls[details.tabId]=new Object();
-				urls[details.tabId].dom=tab.url;
-				urls[details.tabId].block=new Object();
-				urls[details.tabId].origin=[];
-				urls[details.tabId].origin.push(url);
+				if(origin in blocking)
+					urls[details.tabId].block[origin]=1;
 			}
-			if(origin in blocking)
-				urls[details.tabId].block[origin]=1;
 			});
 	}
 	//else
@@ -161,30 +163,30 @@ function whitelist(details){
 	if(details.tabId!=-1){
 		chrome.tabs.get(details.tabId, function(tab){
 			//console.log("tab id:"+details.tabId+"tab url:"+tab.url+" url:"+details.url);
-			
-			if(details.tabId in urls){
-					if(urls[details.tabId].dom!=tab.url){
-						urls[details.tabId].dom=tab.url;
-						urls[details.tabId].origin=[];
-						urls[details.tabId].block=new Object();
-					}
+			if(tab!=undefined){
+				if(details.tabId in urls){
+						if(urls[details.tabId].dom!=tab.url){
+							urls[details.tabId].dom=tab.url;
+							urls[details.tabId].origin=[];
+							urls[details.tabId].block=new Object();
+						}
+						urls[details.tabId].origin.push(url);
+				}else{
+					urls[details.tabId]=new Object();
+					urls[details.tabId].dom=tab.url;
+					urls[details.tabId].block=new Object();
+					urls[details.tabId].origin=[];
 					urls[details.tabId].origin.push(url);
-			}else{
-				urls[details.tabId]=new Object();
-				urls[details.tabId].dom=tab.url;
-				urls[details.tabId].block=new Object();
-				urls[details.tabId].origin=[];
-				urls[details.tabId].origin.push(url);
+				}
+				
+				if( !(origin in white)){
+					urls[details.tabId].block[origin]=1;
+					console.log("block origin :"+origin);
+				}else {
+					urls[details.tabID].block[origin]=undefined;
+					console.log("whitelist block origin :"+origin);
+				}
 			}
-			
-			if( !(origin in white)){
-				urls[details.tabId].block[origin]=1;
-				console.log("block origin :"+origin);
-			}else {
-				urls[details.tabID].block[origin]=undefined;
-				console.log("whitelist block origin :"+origin);
-			}
-
 		});	
 	}else
 		;
