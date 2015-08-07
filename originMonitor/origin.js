@@ -24,6 +24,7 @@
 				     		var domain = document.getElementById("domain");
 				     		var domOrigin = obj.dom.split('\/')[0] + "//" + obj.dom.split('\/')[2];
 				     		domain.innerHTML = "Website: "+ domOrigin;
+				     		document.getElementById("monitor").appendChild(document.createElement('br'));
 				     		domain.style.color = "Brown";
 				     		domain.style.fontSize = "20px";
 				     		domain.style.fontFamily = "Arial";
@@ -105,6 +106,8 @@
 			     			var image = document.createElement('table');
 			     			var tr = document.createElement('tr');
 			     			tr.innerHTML = "Image:";
+			     			tr.style.color = "brown";
+			     			tr.style.fontWeight = "bold";
 			     			image.appendChild(tr);
 			     			appendUrl(image,imagearr,blockset,currentTabID,mode);
 			     			monitor.appendChild(image);
@@ -113,6 +116,8 @@
 			     			var doc = document.createElement("table");
 			     			var tr = document.createElement("tr");
 			     			tr.innerHTML = "Document:";
+			     			tr.style.color = "brown";
+			     			tr.style.fontWeight = "bold";
 			     			doc.appendChild(tr);
 			     			appendUrl(doc,docarr,blockset,currentTabID,mode);
 			     			monitor.appendChild(doc);
@@ -121,6 +126,8 @@
 			     			var fonts = document.createElement("table");
 			     			var tr = document.createElement("tr");
 			     			tr.innerHTML = "Font:";
+			     			tr.style.color = "brown";
+			     			tr.style.fontWeight = "bold";
 			     			fonts.appendChild(tr);
 			     			appendUrl(fonts,fontsarr,blockset,currentTabID,mode);
 			     			monitor.appendChild(fonts);
@@ -129,6 +136,8 @@
 			     			var script = document.createElement("table");
 			     			var tr = document.createElement("tr");
 			     			tr.innerHTML = "Script:";
+			     			tr.style.color = "brown";
+			     			tr.style.fontWeight = "bold";
 			     			script.appendChild(tr);
 			     			appendUrl(script,scriptarr,blockset,currentTabID,mode);
 			     			monitor.appendChild(script);
@@ -137,6 +146,8 @@
 			     			var css = document.createElement("table");
 			     			var tr = document.createElement("tr");
 			     			tr.innerHTML = "CSS:";
+			     			tr.style.color = "brown";
+			     			tr.style.fontWeight = "bold";
 			     			css.appendChild(tr);
 			     			appendUrl(css,cssarr,blockset,currentTabID,mode);
 			     			monitor.appendChild(css);
@@ -145,6 +156,8 @@
 			     			var others = document.createElement("table");
 			     			var tr = document.createElement("tr");
 			     			tr.innerHTML = "Others:";
+			     			tr.style.color = "brown";
+			     			tr.style.fontWeight = "bold";
 			     			others.appendChild(tr);
 			     			appendUrl(others,othersarr,blockset,currentTabID,mode);		
 			     			monitor.appendChild(others);

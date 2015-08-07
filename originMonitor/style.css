@@ -81,7 +81,8 @@ button {
 	margin:0px;padding:0px;
 }
 .newtableclass tr:nth-child(odd){ 
-	background-color:#7f0000; 
+	background-color:#7f0000;
+	color:white; 
 }
 .newtableclass tr:nth-child(even){ 
 	background-color:#ffffff; 
@@ -93,10 +94,9 @@ button {
 	border-width:0px 1px 1px 0px;
 	text-align:left;
 	padding:10px;
-	font-size:10px;
+	font-size:18px;
 	font-family:Arial;
 	font-weight:bold;
-	color:#000000;
 }
 .newtableclass tr:first-child td{
 	background:-o-linear-gradient(bottom, #7f0000 5%, #ffffff 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #7f0000), color-stop(1, #ffffff) );
@@ -107,15 +107,8 @@ button {
 	border:0px solid #000000;
 	text-align:center;
 	border-width:0px 0px 1px 1px;
-	font-size:14px;
+	font-size:18px;
 	font-family:Courier;
 	font-weight:bold;
 	color:#ffffff;
-}
-.newtableclass tr:first-child:hover td{
-	background:-o-linear-gradient(bottom, #7f0000 5%, #ffffff 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #7f0000), color-stop(1, #ffffff) );
-	background:-moz-linear-gradient( center top, #7f0000 5%, #ffffff 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#7f0000", endColorstr="#ffffff");	background: -o-linear-gradient(top,#7f0000,ffffff);
-
-	background-color:#7f0000;
 }

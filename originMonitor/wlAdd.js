@@ -81,7 +81,7 @@ function wlAdd() {
  	for (r = 0; r < rows.length; r++) {
 		cells = rows[r].cells;
 		for (c = 0; c < cells.length; c+=2) {
-			if (pair['name'] == cells[c].innerHTML) {
+			if (pair['name'].toLowerCase() == cells[c].innerHTML.toLowerCase()) {
  				found = 1;
  				alert("Duplicates exist!");
  				break;
