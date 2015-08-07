@@ -20,6 +20,7 @@
 			     				domain.style.fontSize = "20px";
 			     			}
 			     		else {
+			     			var mode=obj.mode;
 				     		var domain = document.getElementById("domain");
 				     		var domOrigin = obj.dom.split('\/')[0] + "//" + obj.dom.split('\/')[2];
 				     		domain.innerHTML = "Website: "+ domOrigin;
@@ -105,7 +106,7 @@
 			     			var tr = document.createElement('tr');
 			     			tr.innerHTML = "Image:";
 			     			image.appendChild(tr);
-			     			appendUrl(image,imagearr,blockset,currentTabID);
+			     			appendUrl(image,imagearr,blockset,currentTabID,mode);
 			     			monitor.appendChild(image);
 			     		}
 			     		if (docarr.length != 0) {
@@ -113,7 +114,7 @@
 			     			var tr = document.createElement("tr");
 			     			tr.innerHTML = "Document:";
 			     			doc.appendChild(tr);
-			     			appendUrl(doc,docarr,blockset,currentTabID);
+			     			appendUrl(doc,docarr,blockset,currentTabID,mode);
 			     			monitor.appendChild(doc);
 			     		}
 			     		if (fontsarr.length != 0) {
@@ -121,7 +122,7 @@
 			     			var tr = document.createElement("tr");
 			     			tr.innerHTML = "Font:";
 			     			fonts.appendChild(tr);
-			     			appendUrl(fonts,fontsarr,blockset,currentTabID);
+			     			appendUrl(fonts,fontsarr,blockset,currentTabID,mode);
 			     			monitor.appendChild(fonts);
 			     		}
 			     		if (scriptarr.length != 0) {
@@ -129,7 +130,7 @@
 			     			var tr = document.createElement("tr");
 			     			tr.innerHTML = "Script:";
 			     			script.appendChild(tr);
-			     			appendUrl(script,scriptarr,blockset,currentTabID);
+			     			appendUrl(script,scriptarr,blockset,currentTabID,mode);
 			     			monitor.appendChild(script);
 			     		}
 			     		if (cssarr.length != 0) {
@@ -137,7 +138,7 @@
 			     			var tr = document.createElement("tr");
 			     			tr.innerHTML = "CSS:";
 			     			css.appendChild(tr);
-			     			appendUrl(css,cssarr,blockset,currentTabID);
+			     			appendUrl(css,cssarr,blockset,currentTabID,mode);
 			     			monitor.appendChild(css);
 			     		}
 			     		if (othersarr.length != 0) {
@@ -145,26 +146,16 @@
 			     			var tr = document.createElement("tr");
 			     			tr.innerHTML = "Others:";
 			     			others.appendChild(tr);
-			     			appendUrl(others,othersarr,blockset,currentTabID);		
+			     			appendUrl(others,othersarr,blockset,currentTabID,mode);		
 			     			monitor.appendChild(others);
 			     		}
-			     		/*var doc = document.getElementById('doc');
-			     		appendUrl(doc,docarr,blockset,currentTabID);
-			     		var fonts = document.getElementById('fonts');
-			     		appendUrl(fonts,fontsarr,blockset,currentTabID);
-			     		var script = document.getElementById('script');
-			     		appendUrl(script,scriptarr,blockset,currentTabID);
-			     		var css = document.getElementById('css');
-			     		appendUrl(css,cssarr,blockset,currentTabID);
-			     		var others = document.getElementById('others');
-			     		appendUrl(others,othersarr,blockset,currentTabID);*/
 			     	}
 			     );
 		});
    
  });
 
- function appendUrl(table,array,blockset,currentTabID){
+ function appendUrl(table,array,blockset,currentTabID,mode){
 
 	for (var i in array) {
 			var row = document.createElement("tr");
@@ -177,46 +168,48 @@
 			}
 			column1.className = array[i];
 			var column2 = document.createElement("td");
-			var button = document.createElement("button");
-			button.innerHTML = "Block!";
-			button.name = array[i];
-			button.addEventListener("click",function(e){
-				var block_url = e.target.name;
-				var ele = document.getElementsByClassName(e.target.name);
-				for(var k = 0;k < ele.length;k++)
-					ele[k].style.color = "Blue";
-				//send message to background
-				chrome.runtime.sendMessage({
-			     	blockurl:block_url,
-			     	flag:2,
-			     	tabid:currentTabID
-			     },
-			     function(response){
-			     	console.log(response.success);
-			     });
-			});
-			var button_unblock = document.createElement("button");
-			button_unblock.innerHTML = "Unblock!";
-			button_unblock.name = array[i];
-			button_unblock.addEventListener("click",function(e){
-				var unblock_url = e.target.name;
-				var ele = document.getElementsByClassName(e.target.name);
-				for(var k = 0;k<ele.length;k++)
-					ele[k].style.color = "Grey";
-				//send message to background
-				chrome.runtime.sendMessage({
-			     	unblockurl:unblock_url,
-			     	flag:7,
-			     	tabid:currentTabID
-			     },
-			     function(response){
-			     	console.log(response.success);
-			     });
-			});
-			if( !(array[i] in blockset))
-				column2.appendChild(button);
-			else
-				column2.appendChild(button_unblock);
+			if(mode==0){ //show button only in blacklist mode
+				var button = document.createElement("button");
+				button.innerHTML = "Block!";
+				button.name = array[i];
+				button.addEventListener("click",function(e){
+					var block_url = e.target.name;
+					var ele = document.getElementsByClassName(e.target.name);
+					for(var k = 0;k < ele.length;k++)
+						ele[k].style.color = "Blue";
+					//send message to background
+					chrome.runtime.sendMessage({
+				     	blockurl:block_url,
+				     	flag:2,
+				     	tabid:currentTabID
+				     },
+				     function(response){
+				     	console.log(response.success);
+				     });
+				});
+				var button_unblock = document.createElement("button");
+				button_unblock.innerHTML = "Unblock!";
+				button_unblock.name = array[i];
+				button_unblock.addEventListener("click",function(e){
+					var unblock_url = e.target.name;
+					var ele = document.getElementsByClassName(e.target.name);
+					for(var k = 0;k<ele.length;k++)
+						ele[k].style.color = "Grey";
+					//send message to background
+					chrome.runtime.sendMessage({
+				     	unblockurl:unblock_url,
+				     	flag:7,
+				     	tabid:currentTabID
+				     },
+				     function(response){
+				     	console.log(response.success);
+				     });
+				});
+				if( !(array[i] in blockset))
+					column2.appendChild(button);
+				else
+					column2.appendChild(button_unblock);
+			}
 			column1.innerHTML = array[i];
 			row.appendChild(column1);
 			row.appendChild(column2);

@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('wlDelete').addEventListener('click',clickHandler3);
   document.getElementById('startwl').addEventListener('click',function(){
 	var white=JSON.stringify(whitelist);
+	//change current mode to whitelist
 	 	chrome.runtime.sendMessage({
 	 		flag:3,
 	 		white:white

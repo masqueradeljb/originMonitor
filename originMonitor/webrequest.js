@@ -13,6 +13,34 @@ init();
 
 /*default black list initialization*/
 function init(){
+	chrome.storage.sync.get('mode',function(result){
+		if(result.mode!=undefined)
+			mode=result.mode;
+		else
+			mode=1;
+		if(mode==0)
+			blackinit();
+		else
+			whiteinit();
+	});
+}
+function whiteinit(){
+	chrome.webRequest.onBeforeRequest.removeListener(blacklist);
+	chrome.webRequest.onBeforeRequest.addListener(
+		whitelist
+		,{urls: ["*://*/*"]},
+		 ["blocking"]
+	);
+	chrome.storage.sync.get('white',function(result){
+		if(result.white!=undefined)
+			white=result.white;
+		else
+			white=new Object();
+		//clear whitelist
+		blocking=new Object();
+	});
+}
+function blackinit(){
 	chrome.webRequest.onBeforeRequest.removeListener(whitelist);
 	chrome.webRequest.onBeforeRequest.addListener(
 		blacklist
@@ -28,6 +56,7 @@ function init(){
 		white=new Object();
 	});
 }
+
 
 /*listen to pop up menu and white list page requests*/
 chrome.runtime.onMessage.addListener(
@@ -45,6 +74,7 @@ chrome.runtime.onMessage.addListener(
 				}
 				
 			}
+			urls[tabid].mode=mode;
 			var origin = JSON.stringify(urls[tabid]);
 			//send back response
 			sendResponse(origin);
@@ -56,6 +86,7 @@ chrome.runtime.onMessage.addListener(
 
 		}else if(request.flag==3){ //flag ==3 start whitelist mode
 			mode=1;
+			chrome.storage.sync.set({'mode':mode});
 			chrome.webRequest.onBeforeRequest.removeListener(blacklist);
 			urls=new Object();
 			//storage black list
@@ -66,18 +97,21 @@ chrome.runtime.onMessage.addListener(
 			var list=JSON.parse(request.white);
 			for(var i in list)
 				white[list[i].url]=1;
+			chrome.storage.sync.set({'white':white});
+
 			chrome.webRequest.onBeforeRequest.addListener(whitelist,{urls: ["*://*/*"]},
 	 												["blocking"]);
 		}else if(request.flag==4 && mode==1){  //add white list
 			white[request.url]=1;	
-
+			chrome.storage.sync.set({'white':white});
 		}else if(request.flag==5 && mode==1){	//delete origin from white list
 			delete white[request.url];
-
+			chrome.storage.sync.set({'white':white});
 		}else if(request.flag==6){ //start blacklist mode
 			mode=0;
+			chrome.storage.sync.set({'mode':mode});
 			//get black list from storage
-			init();
+			blackinit();
 		}else if(request.flag==7 && mode==0){ // unblock origin in blacklist
 			if(request.unblockurl in blocking)
 				delete blocking[request.unblockurl];
@@ -85,6 +119,7 @@ chrome.runtime.onMessage.addListener(
 				delete urls[request.tabid].block[request.unblockurl];
 			sendResponse({success:request.unblockurl});
 			chrome.storage.sync.set({'blacklist':blocking});
+			chrome.storage.sync.set({'white':white});
 		}
 	});
 
