@@ -20,6 +20,15 @@ p {
 	 margin-bottom: 1em;
 }
 
+input {
+	font-size:16px; 
+	padding:10px; 
+	border-width:5px; 
+	border-style:solid;  
+	border-color:#a73f2d; 
+	text-shadow:2px 0px 0px rgba(42,42,42,.22)
+}
+
 button {
 	-moz-box-shadow:inset 0px 34px 0px -15px #b54b3a;
 	-webkit-box-shadow:inset 0px 34px 0px -15px #b54b3a;
@@ -39,7 +48,7 @@ button {
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
-	font-family:Courier New;
+	font-family:Courier;
 	font-size:16px;
 	font-weight:bold;
 	padding:9px 23px;
