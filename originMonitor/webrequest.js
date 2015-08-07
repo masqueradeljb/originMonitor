@@ -89,11 +89,9 @@ chrome.runtime.onMessage.addListener(
 			chrome.storage.sync.set({'mode':mode});
 			chrome.webRequest.onBeforeRequest.removeListener(blacklist);
 			urls=new Object();
-			//storage black list
-			chrome.storage.sync.set({'blacklist':blocking},function(result){
-				//clear current block set after store the black list.
-				blocking=new Object();
-			});
+
+			blocking=new Object();
+
 			var list=JSON.parse(request.white);
 			for(var i in list)
 				white[list[i].url]=1;
@@ -119,7 +117,6 @@ chrome.runtime.onMessage.addListener(
 				delete urls[request.tabid].block[request.unblockurl];
 			sendResponse({success:request.unblockurl});
 			chrome.storage.sync.set({'blacklist':blocking});
-			chrome.storage.sync.set({'white':white});
 		}
 	});
 
