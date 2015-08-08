@@ -1,14 +1,16 @@
-//Deal with the modification in popup window.
+//Deal with the UI in popup window.
 //Deal with the communication with background.
-
+  /*Load content whenever pop up menu shows*/
  document.addEventListener('DOMContentLoaded',function(){
+ 	//get current tab id. And request data from background process 
+ 	//for all the webrequest associate with this tab
  	chrome.tabs.query({active:true,currentWindow: true},function(tabs){
 				var currentTabID=tabs[0].id;
 				console.log("popup:"+currentTabID);
 			     chrome.runtime.sendMessage({
 			     	tabid:currentTabID,
 			     	flag:1
-			     },
+			     },	//get urls and parse the urls to origin, then categorize
 			     	function(response){
 			     		console.log(response);
 			     		var obj = JSON.parse(response);
@@ -32,11 +34,9 @@
 				     		var originset = {};
 				     		var blockset = obj.block;
 				     		for(var j = 0; j < obj.origin.length; ++j){
-				     			//var origin = document.createElement("p");
 				     			var origin = obj.origin[j].split('\/')[0] + "//" + obj.origin[j].split('\/')[2];
 				     			var type = obj.origin[j].split('\/').pop().split('.').pop();
 
-				     			//if (type.innerHTML.match(/.*(png|img|gif|jpeg|jpg).*/)) 
 				     			
 				     			if (origin in originset) {
 				     				if (type.toLowerCase().match(/.*(png|img|gif|jpeg|jpg).*/)) 
@@ -76,7 +76,7 @@
 			     				}
 			     		}
 			     	}
-
+			     		//categories for origins
 			     		var imagearr = [];
 			     		var docarr = [];
 			     		var fontsarr = [];
@@ -100,7 +100,7 @@
 			     				othersarr.push(k);
 			    
 			     		}
-
+			     		//append tables dynamically according to returned data
 			     		var monitor = document.getElementById('monitor');
 			     		if (imagearr.length != 0) {
 			     			var image = document.createElement('table');
@@ -167,9 +167,8 @@
 		});
    
  });
-
+/*Function for append origins into popup menu dynamically*/
  function appendUrl(table,array,blockset,currentTabID,mode){
-
 	for (var i in array) {
 			var row = document.createElement("tr");
 			var column1 = document.createElement("td");

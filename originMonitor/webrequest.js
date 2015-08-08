@@ -11,7 +11,7 @@ var white=new Object();
 
 init();
 
-/*default black list initialization*/
+/*background process list initialization*/
 function init(){
 	chrome.storage.sync.get('mode',function(result){
 		if(result.mode!=undefined)
@@ -24,6 +24,7 @@ function init(){
 			whiteinit();
 	});
 }
+/*whitelist initialization*/
 function whiteinit(){
 	chrome.webRequest.onBeforeRequest.removeListener(blacklist);
 	chrome.webRequest.onBeforeRequest.addListener(
@@ -40,6 +41,7 @@ function whiteinit(){
 		blocking=new Object();
 	});
 }
+/*whitelist initialization*/
 function blackinit(){
 	chrome.webRequest.onBeforeRequest.removeListener(whitelist);
 	chrome.webRequest.onBeforeRequest.addListener(
@@ -196,27 +198,3 @@ function whitelist(details){
 		return {cancel:true};
 	}
 }
-
-//deal with tab reload
-// chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){
-//   	urls[tabId]=new Object();
-//   	urls[tabId].dom=tab.url;
-//   	urls[tabId].origin=[];
-//   	urls[tabId].block=new Object();
-// });
-
-// document.addEventListener('DOMContentLoaded',function(){
-// 	chrome.tabs.onActivated.addListener(function(){
-// 			chrome.tabs.query({active:true,currentWindow: true},function(tabs){
-// 				var currentTabID=tabs[0].id;
-// 				console.log(currentTabID);
-// 			     chrome.webRequest.onBeforeRequest.addListener(
-// 			        function(details) {
-// 			          console.log(currentTabID+": "+details.url);
-// 			        },
-// 		        {urls: ["http://*/*", "https://*/*"],tabId:currentTabID},
-// 		        ["requestHeaders"]);
-// 		});
-
-// 	});	
-// });

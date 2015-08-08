@@ -1,8 +1,9 @@
 //Deal with user input into the white list.
-
+//maintain a temporary storage for white list.
 var whitelist=[];
 
 document.addEventListener('DOMContentLoaded', function() {
+	//get the white list from local storage
 	chrome.storage.sync.get('whitelist',function(result){
 			if(result.whitelist!=undefined)
 				whitelist=result.whitelist;
@@ -22,19 +23,21 @@ document.addEventListener('DOMContentLoaded', function() {
 	 	});
   });
 });
-
+//handle add new origin to whitelist
 function clickHandler1(e) {
   setTimeout(wlAdd, 10);
 }
-
+//handle add search origin in whitelist
 function clickHandler2(e) {
   setTimeout(wlSearch, 10);
 }
 
+//handle delete origin in whitelist
 function clickHandler3(e) {
   setTimeout(wlDelete, 10);
 }
 
+/*initialize whiteliset*/
 function wlInit() {
 
 	var table = document.getElementById("list");
