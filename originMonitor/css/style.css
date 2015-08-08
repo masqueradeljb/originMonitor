@@ -1,7 +1,7 @@
 body {
 	background-color: #99FF66;
 	/*background-color: "White";*/
-	background-image: url("tree.png");
+	background-image: url("/img/tree.png");
 	background-repeat: no-repeat;
 	background-position: right bottom;
 	margin-right: 70px;

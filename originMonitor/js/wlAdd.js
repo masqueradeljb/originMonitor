@@ -75,7 +75,7 @@ function wlAdd() {
  	pair['name'] = document.getElementById("nameInput").value;
  	pair['url']= document.getElementById("urlInput").value;
 
-	if (pair['name'] == "" || 
+	if (pair['name'] == "" || pair['name'].toLowerCase().indexOf("<") != -1 ||
 		!pair['url'].toLowerCase().match(/[a-z]+:\/\/.+(:[0-9]+)?/)){
 		alert("Input is invalid!");
 		return;
@@ -167,7 +167,8 @@ function wlDelete() {
 	var found = 0;
     
     if (name != "" && name.toLowerCase() != "name" 
-    		       && name.toLowerCase() != "url") {
+    		       && name.toLowerCase() != "url"
+    		       && name.toLowerCase().indexOf("<") == -1)  {
 		for (r = 0; r < rows.length; r++) {
 			console.log(rows.length);
 			console.log(r);
