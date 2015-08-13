@@ -32,9 +32,8 @@ function clickHandler2(e) {
 
 function newTab() {
 	//change current mode to whitelist
-	mode=1;
   	chrome.tabs.create({url: 'help.html'});
-  	chrome.storage.sync.set({'mode':1});
+  	//chrome.storage.sync.set({'mode':1});
 }
 
 function display() {

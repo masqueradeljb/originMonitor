@@ -17,7 +17,7 @@ function init(){
 		if(result.mode!=undefined)
 			mode=result.mode;
 		else
-			mode=1;
+			mode=0;
 		if(mode==0)
 			blackinit();
 		else
